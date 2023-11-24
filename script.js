@@ -8,6 +8,14 @@ document.getElementById('add').addEventListener('click', function() {
     input.className = 'mt-2 block w-full rounded-md border-gray-300 shadow-sm';
     sentenceDiv.appendChild(input);
 
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'X';
+    removeButton.className = 'remove px-2 py-1 bg-red-500 text-white rounded';
+    removeButton.addEventListener('click', function() {
+        sentences.removeChild(sentenceDiv);
+    });
+    sentenceDiv.appendChild(removeButton);
+
     const result = document.createElement('p');
     result.className = 'result mt-2 text-gray-500 text-sm';
     sentenceDiv.appendChild(result);
