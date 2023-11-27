@@ -22,22 +22,22 @@ document.getElementById('add').addEventListener('click', function() {
 
     sentences.appendChild(sentenceDiv);
 });
+
 document.getElementById('validateAll').addEventListener('click', function() {
     const sentences = document.getElementsByClassName('sentence');
     let score = 0;
-
     const pluralSubjects = ['we', 'they', 'these', 'those'];
     const singularSubjects = ['i', 'you', 'he', 'she', 'it', 'this', 'that'];
-
+  
     for (let i = 0; i < sentences.length; i++) {
         const sentence = sentences[i].getElementsByTagName('input')[0].value.toLowerCase();
         const result = sentences[i].getElementsByClassName('result')[0];
-
-        const subjectRegex = /^(the\s[a-z]+|[a-z]*|i|you|he|she|it|we|(this|that|these|those)\s[a-z]+)\s/i;
+  
+        const subjectRegex = /^(the\s[a-z]+|[a-z]+|i|you|he|she|it|we|(this|that|these|those)\s[a-z]+)\s/i;
         const verbRegexSingular = /\s(am|is|was)\s/i;
         const verbRegexPlural = /\s(are|were)\s/i;
         const complementRegex = /\s(am|are|is|was|were)\s[a-z\s]*$/i;
-
+  
         const subjectMatch = sentence.match(subjectRegex);
         const subject = subjectMatch ? subjectMatch[0].trim() : '';
 
@@ -47,10 +47,10 @@ document.getElementById('validateAll').addEventListener('click', function() {
         } else if (subjectRegex.test(sentence) && !verbRegexSingular.test(sentence) && !verbRegexPlural.test(sentence)) {
             result.textContent = 'Falta el verbo en la frase.';
             result.style.color = 'red';
-        } else if (singularSubjects.includes(subject) && verbRegexPlural.test(sentence)) {
+        } else if ((singularSubjects.includes(subject) || (subject.endsWith('s') && !pluralSubjects.includes(subject))) && verbRegexPlural.test(sentence)) {
             result.textContent = 'El sujeto y el verbo no concuerdan. El sujeto es singular pero el verbo es plural.';
             result.style.color = 'red';
-        } else if (pluralSubjects.includes(subject) && verbRegexSingular.test(sentence)) {
+        } else if ((pluralSubjects.includes(subject) || (!subject.endsWith('s') && !singularSubjects.includes(subject))) && verbRegexSingular.test(sentence)) {
             result.textContent = 'El sujeto y el verbo no concuerdan. El sujeto es plural pero el verbo es singular.';
             result.style.color = 'red';
         } else if (!complementRegex.test(sentence)) {
@@ -75,6 +75,8 @@ document.getElementById('validateAll').addEventListener('click', function() {
         motivationalMessageElement.textContent = 'No te desanimes, sigue intentándolo.';
     }
 });
+
+
 
 
 var openModal = document.querySelector('#openModal');
