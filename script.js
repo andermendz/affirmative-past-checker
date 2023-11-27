@@ -22,7 +22,6 @@ document.getElementById('add').addEventListener('click', function() {
 
     sentences.appendChild(sentenceDiv);
 });
-
 // Agrega un evento de clic al botón con el id 'validateAll'
 document.getElementById('validateAll').addEventListener('click', function() {
     // Obtiene todas las oraciones del documento
@@ -31,8 +30,8 @@ document.getElementById('validateAll').addEventListener('click', function() {
     let score = 0;
 
     // Define los sujetos singulares y plurales y los verbos singulares y plurales
-    const singularSubjects = ["i", "he", "she", "it"];
-    const pluralSubjects = ["you", "we", "they"];
+    const singularSubjects = ["i", "he", "she", "it", "this", "that"];
+    const pluralSubjects = ["you", "we", "they", "these", "those"];
     const singularVerb = "was";
     const pluralVerb = "were";
 
