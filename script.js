@@ -46,6 +46,8 @@ document.getElementById('validateAll').addEventListener('click', function() {
                 result.textContent = 'La frase no es válida.';
                 result.style.color = 'red';
             }
+        } else {
+            result.textContent = ''; // Borra el mensaje anterior si la cadena está vacía
         }
     });
 
@@ -64,18 +66,33 @@ document.getElementById('validateAll').addEventListener('click', function() {
 });
 
 
-var openModal = document.querySelector('#openModal');
-var closeModal = document.querySelector('.modal-close');
-var modal = document.querySelector('.modal');
-
-openModal.addEventListener('click', function() {
-    modal.classList.remove('opacity-0');
-    modal.classList.remove('pointer-events-none');
-    document.body.classList.add('modal-active');
+// Cuando se abre el modal
+document.getElementById("openModal").addEventListener("click", function () {
+    var names = ["Anderson Mendoza", "Daniel Ortiz", "Luis Cantillo", "Carlos Barrera", "Juan Ojeda"];
+    var namesList = document.getElementById("names");
+    namesList.innerHTML = "";
+    names.forEach(function (name) {
+        var li = document.createElement("li");
+        li.textContent = name;
+        namesList.appendChild(li);
+    });
+    var modal = document.getElementById("modal");
+    modal.style.display = "flex";
+    modal.style.zIndex = "1000"; // Asegúrate de que el modal esté por encima del subcontenedor
+    setTimeout(function () {
+        modal.classList.add("show");
+    }, 20);
+  
+    // Asegúrate de que el subcontenedor esté debajo del modal
+    var subContainer = document.querySelector(".sub-container");
+    subContainer.style.zIndex = "500";
 });
-
-closeModal.addEventListener('click', function() {
-    modal.classList.add('opacity-0');
-    modal.classList.add('pointer-events-none');
-    document.body.classList.remove('modal-active');
+  
+// Cuando se cierra el modal
+document.getElementById("closeModal").addEventListener("click", function () {
+    var modal = document.getElementById("modal");
+    modal.classList.remove("show");
+    setTimeout(function () {
+        modal.style.display = "none";
+    }, 0);
 });
