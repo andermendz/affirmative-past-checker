@@ -22,6 +22,7 @@ document.getElementById('add').addEventListener('click', function() {
 
     sentences.appendChild(sentenceDiv);
 });
+
 // Agrega un evento de clic al botón con el id 'validateAll'
 document.getElementById('validateAll').addEventListener('click', function() {
     // Obtiene todas las oraciones del documento
@@ -60,7 +61,8 @@ document.getElementById('validateAll').addEventListener('click', function() {
         if ((singularSubjectRegex.test(subject) && verb === singularVerb) || 
             (pluralSubjectRegex.test(subject) && verb === pluralVerb) ||
             (!singularSubjectRegex.test(subject) && !pluralSubjectRegex.test(subject) && subject[subject.length-1] !== 's' && verb === singularVerb) ||
-            (!singularSubjectRegex.test(subject) && !pluralSubjectRegex.test(subject) && subject[subject.length-1] === 's' && verb === pluralVerb)) {
+            (!singularSubjectRegex.test(subject) && !pluralSubjectRegex.test(subject) && subject[subject.length-1] === 's' && verb === pluralVerb) ||
+            (subject[0] === subject[0].toUpperCase() && verb === singularVerb)) {
             // Si concuerdan, la frase es válida y se incrementa la puntuación
             result.textContent = 'La frase es válida.';
             result.style.color = 'green';
