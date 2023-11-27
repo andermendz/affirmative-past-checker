@@ -52,29 +52,14 @@ document.getElementById('validateAll').addEventListener('click', function() {
     const sentences = document.querySelectorAll('.sentence');
     let score = 0;
 
-    const pluralSubjects = ['we', 'they', 'these', 'those'];
-    const singularSubjects = ['i', 'you', 'he', 'she', 'it', 'this', 'that'];
-    const singularVerb = "was";
-    const pluralVerb = "were";
+    const singularPattern = /^(the )?(i|you|he|she|it|this|that|[^s]+) was/i;
+    const pluralPattern = /^(the )?(we|they|these|those|.+s) were/i;
 
     sentences.forEach(sentence => {
         const input = sentence.querySelector('input');
         const result = sentence.querySelector('.result');
 
-        const words = input.value.toLowerCase().split(' ');
-        let subject = words[0];
-        let verb = words[1];
-
-        // Check for defined article "the"
-        if (subject === 'the') {
-            subject = words[1];
-            verb = words[2];
-        }
-
-        if ((singularSubjects.includes(subject) && verb === singularVerb) || 
-            (pluralSubjects.includes(subject) && verb === pluralVerb) ||
-            (!singularSubjects.includes(subject) && !pluralSubjects.includes(subject) && subject[subject.length-1] !== 's' && verb === singularVerb) ||
-            (!singularSubjects.includes(subject) && !pluralSubjects.includes(subject) && subject[subject.length-1] === 's' && verb === pluralVerb)) {
+        if (singularPattern.test(input.value) || pluralPattern.test(input.value)) {
             result.textContent = 'La frase es válida.';
             result.style.color = 'green';
             score++;
@@ -97,7 +82,6 @@ document.getElementById('validateAll').addEventListener('click', function() {
         motivationalMessageElement.textContent = 'No te desanimes, sigue intentándolo.';
     }
 });
-
 
 
 
