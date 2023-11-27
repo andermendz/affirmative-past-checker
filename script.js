@@ -46,15 +46,12 @@ document.getElementById('validateAll').addEventListener('click', function() {
             verb = words[2];
         }
 
-        const singularSubjectRegex = new RegExp(`^(${singularSubjects.join('|')})$`);
-        const pluralSubjectRegex = new RegExp(`^(${pluralSubjects.join('|')})$`);
-
         if (input.value.trim() !== '') {
             validSentences++;
-            if ((singularSubjectRegex.test(subject) && verb === singularVerb) || 
-                (pluralSubjectRegex.test(subject) && verb === pluralVerb) ||
-                (!singularSubjectRegex.test(subject) && !pluralSubjectRegex.test(subject) && subject[subject.length-1] !== 's' && verb === singularVerb) ||
-                (!singularSubjectRegex.test(subject) && !pluralSubjectRegex.test(subject) && subject[subject.length-1] === 's' && verb === pluralVerb) ||
+            if ((singularSubjects.includes(subject) && verb === singularVerb) || 
+                (pluralSubjects.includes(subject) && verb === pluralVerb) ||
+                (!singularSubjects.includes(subject) && !pluralSubjects.includes(subject) && subject[subject.length-1] !== 's' && verb === singularVerb) ||
+                (!singularSubjects.includes(subject) && !pluralSubjects.includes(subject) && subject[subject.length-1] === 's' && verb === pluralVerb) ||
                 (subject[0] === subject[0].toUpperCase() && verb === singularVerb)) {
                 result.textContent = 'La frase es válida.';
                 result.style.color = 'green';
@@ -79,7 +76,6 @@ document.getElementById('validateAll').addEventListener('click', function() {
         motivationalMessageElement.textContent = 'No te desanimes, sigue intentándolo.';
     }
 });
-
 
 
 
