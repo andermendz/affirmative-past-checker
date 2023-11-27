@@ -46,10 +46,14 @@ document.getElementById('validateAll').addEventListener('click', function() {
             verb = words[2];
         }
 
-        if ((singularSubjects.includes(subject) && verb === singularVerb) || 
-            (pluralSubjects.includes(subject) && verb === pluralVerb) ||
-            (!singularSubjects.includes(subject) && !pluralSubjects.includes(subject) && subject[subject.length-1] !== 's' && verb === singularVerb) ||
-            (!singularSubjects.includes(subject) && !pluralSubjects.includes(subject) && subject[subject.length-1] === 's' && verb === pluralVerb)) {
+        // Regular expressions for subject-verb agreement
+        const singularSubjectRegex = new RegExp(`^(${singularSubjects.join('|')})$`);
+        const pluralSubjectRegex = new RegExp(`^(${pluralSubjects.join('|')})$`);
+
+        if ((singularSubjectRegex.test(subject) && verb === singularVerb) || 
+            (pluralSubjectRegex.test(subject) && verb === pluralVerb) ||
+            (!singularSubjectRegex.test(subject) && !pluralSubjectRegex.test(subject) && subject[subject.length-1] !== 's' && verb === singularVerb) ||
+            (!singularSubjectRegex.test(subject) && !pluralSubjectRegex.test(subject) && subject[subject.length-1] === 's' && verb === pluralVerb)) {
             result.textContent = 'La frase es válida.';
             result.style.color = 'green';
             score++;
@@ -72,6 +76,7 @@ document.getElementById('validateAll').addEventListener('click', function() {
         motivationalMessageElement.textContent = 'No te desanimes, sigue intentándolo.';
     }
 });
+
 
 
 
