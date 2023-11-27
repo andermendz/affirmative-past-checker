@@ -1,4 +1,3 @@
-
 document.getElementById('add').addEventListener('click', function() {
     const sentences = document.getElementById('sentences');
     const sentenceDiv = document.createElement('div');
@@ -24,22 +23,39 @@ document.getElementById('add').addEventListener('click', function() {
     sentences.appendChild(sentenceDiv);
 });
 
-
 document.getElementById('validateAll').addEventListener('click', function() {
     const sentences = document.querySelectorAll('.sentence');
     let score = 0;
     let validSentences = 0;
 
-    const singularPattern = /^(i|he|she|it|this|that|the\s[a-z]+[^s])\swas/i;
-    const pluralPattern = /^(you|we|they|these|those|the\s[a-z]+s)\swere/i;
+    const singularSubjects = ["i", "he", "she", "it", "this", "that"];
+    const pluralSubjects = ["you", "we", "they", "these", "those"];
+    const singularVerb = "was";
+    const pluralVerb = "were";
 
     sentences.forEach(sentence => {
         const input = sentence.querySelector('input');
         const result = sentence.querySelector('.result');
 
+        const words = input.value.toLowerCase().split(' ');
+        let subject = words[0];
+        let verb = words[1];
+
+        if (subject === 'the') {
+            subject = words[1];
+            verb = words[2];
+        }
+
+        const singularSubjectRegex = new RegExp(`^(${singularSubjects.join('|')})$`);
+        const pluralSubjectRegex = new RegExp(`^(${pluralSubjects.join('|')})$`);
+
         if (input.value.trim() !== '') {
             validSentences++;
-            if (singularPattern.test(input.value) || pluralPattern.test(input.value)) {
+            if ((singularSubjectRegex.test(subject) && verb === singularVerb) || 
+                (pluralSubjectRegex.test(subject) && verb === pluralVerb) ||
+                (!singularSubjectRegex.test(subject) && !pluralSubjectRegex.test(subject) && subject[subject.length-1] !== 's' && verb === singularVerb) ||
+                (!singularSubjectRegex.test(subject) && !pluralSubjectRegex.test(subject) && subject[subject.length-1] === 's' && verb === pluralVerb) ||
+                (subject[0] === subject[0].toUpperCase() && verb === singularVerb)) {
                 result.textContent = 'La frase es válida.';
                 result.style.color = 'green';
                 score++;
@@ -63,6 +79,7 @@ document.getElementById('validateAll').addEventListener('click', function() {
         motivationalMessageElement.textContent = 'No te desanimes, sigue intentándolo.';
     }
 });
+
 
 
 
