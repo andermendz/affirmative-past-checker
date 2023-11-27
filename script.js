@@ -24,44 +24,35 @@ document.getElementById('add').addEventListener('click', function() {
 });
 
 document.getElementById('validateAll').addEventListener('click', function() {
-    const sentences = document.getElementsByClassName('sentence');
+    const sentences = document.querySelectorAll('.sentence');
     let score = 0;
-    const pluralSubjects = ['we', 'they', 'these', 'those'];
-    const singularSubjects = ['i', 'you', 'he', 'she', 'it', 'this', 'that'];
-  
-    for (let i = 0; i < sentences.length; i++) {
-        const sentence = sentences[i].getElementsByTagName('input')[0].value.toLowerCase();
-        const result = sentences[i].getElementsByClassName('result')[0];
-  
-        const subjectRegex = /^(the\s[a-z]+|[a-z]+|i|you|he|she|it|we|(this|that|these|those)\s[a-z]+)\s/i;
-        const verbRegexSingular = /\s(am|is|was)\s/i;
-        const verbRegexPlural = /\s(are|were)\s/i;
-        const complementRegex = /\s(am|are|is|was|were)\s[a-z\s]*$/i;
-  
-        const subjectMatch = sentence.match(subjectRegex);
-        const subject = subjectMatch ? subjectMatch[0].trim() : '';
 
-        if (!subjectRegex.test(sentence)) {
-            result.textContent = 'Falta el sujeto en la frase.';
-            result.style.color = 'red';
-        } else if (subjectRegex.test(sentence) && !verbRegexSingular.test(sentence) && !verbRegexPlural.test(sentence)) {
-            result.textContent = 'Falta el verbo en la frase.';
-            result.style.color = 'red';
-        } else if ((singularSubjects.includes(subject) || (subject.endsWith('s') && !pluralSubjects.includes(subject))) && verbRegexPlural.test(sentence)) {
-            result.textContent = 'El sujeto y el verbo no concuerdan. El sujeto es singular pero el verbo es plural.';
-            result.style.color = 'red';
-        } else if ((pluralSubjects.includes(subject) || (!subject.endsWith('s') && !singularSubjects.includes(subject))) && verbRegexSingular.test(sentence)) {
-            result.textContent = 'El sujeto y el verbo no concuerdan. El sujeto es plural pero el verbo es singular.';
-            result.style.color = 'red';
-        } else if (!complementRegex.test(sentence)) {
-            result.textContent = 'Falta el complemento en la frase.';
-            result.style.color = 'red';
-        } else {
+    const singularSubjects = ["I", "He", "She", "It"];
+    const pluralSubjects = ["You", "We", "They"];
+    const singularVerb = "was";
+    const pluralVerb = "were";
+
+    sentences.forEach(sentence => {
+        const input = sentence.querySelector('input');
+        const result = sentence.querySelector('.result');
+
+        const words = input.value.split(' ');
+        const subject = words[0];
+        const verb = words[1];
+
+        if ((singularSubjects.includes(subject) && verb === singularVerb) || 
+            (pluralSubjects.includes(subject) && verb === pluralVerb) ||
+            (subject[0].toLowerCase() !== 's' && verb === singularVerb && !pluralSubjects.includes(subject)) ||
+            (subject[0].toLowerCase() === 's' && verb === pluralVerb && !singularSubjects.includes(subject))) {
             result.textContent = 'La frase es válida.';
             result.style.color = 'green';
             score++;
+        } else {
+            result.textContent = 'La frase no es válida.';
+            result.style.color = 'red';
         }
-    }
+    });
+
     const scoreElement = document.getElementById('score');
     const scoreValue = ((score / sentences.length) * 5).toFixed(1);
     scoreElement.textContent = 'Puntuación: ' + scoreValue;
@@ -75,8 +66,6 @@ document.getElementById('validateAll').addEventListener('click', function() {
         motivationalMessageElement.textContent = 'No te desanimes, sigue intentándolo.';
     }
 });
-
-
 
 
 var openModal = document.querySelector('#openModal');
