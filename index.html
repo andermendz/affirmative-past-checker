@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Sentence Validator</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .modal {
+            transition: opacity 0.25s ease;
+        }
+        body.modal-active {
+            overflow-x: hidden;
+            overflow-y: visible !important;
+        }
+    </style>
 </head>
 <body class="flex items-center justify-center min-h-screen bg-gray-100">
     <div class="max-w-lg mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
@@ -20,11 +29,35 @@
                 </div>
                 <button id="add" class="mt-2 px-2 py-1 bg-green-500 text-white rounded">Add Sentence</button>
                 <button id="validateAll" class="mt-2 px-2 py-1 bg-blue-500 text-white rounded">Validate All</button>
+                <button id="openModal" class="mt-2 px-2 py-1 bg-gray-500 text-white rounded">Estudiantes</button>
                 <p id="score" class="mt-2 text-gray-500 text-sm"></p>
                 <p id="motivationalMessage" class="mt-2 text-gray-500 text-sm"></p>
             </div>
         </div>
     </div>
+    <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50 backdrop-blur-md"></div>
+        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            <div class="modal-content py-4 text-left px-6">
+                <div class="flex justify-between items-center pb-3">
+                    <p class="text-2xl font-bold">Estudiantes</p>
+                    <div class="modal-close cursor-pointer z-50">
+                        <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <ul>
+                    <li>Anderson Mendoza</li>
+                    <li>Luis Cantillo</li>
+                    <li>Carlos Barrera</li>
+                    <li>Juan Ojeda</li>
+                    <li>Daniel Ortiz</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>

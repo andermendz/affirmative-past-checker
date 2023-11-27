@@ -23,7 +23,6 @@ document.getElementById('add').addEventListener('click', function() {
     sentences.appendChild(sentenceDiv);
 });
 
-
 document.getElementById('validateAll').addEventListener('click', function() {
     const sentences = document.getElementsByClassName('sentence');
     let score = 0;
@@ -70,4 +69,20 @@ document.getElementById('validateAll').addEventListener('click', function() {
     } else {
         motivationalMessageElement.textContent = 'No te desanimes, sigue intentándolo.';
     }
+});
+
+var openModal = document.querySelector('#openModal');
+var closeModal = document.querySelector('.modal-close');
+var modal = document.querySelector('.modal');
+
+openModal.addEventListener('click', function() {
+    modal.classList.remove('opacity-0');
+    modal.classList.remove('pointer-events-none');
+    document.body.classList.add('modal-active');
+});
+
+closeModal.addEventListener('click', function() {
+    modal.classList.add('opacity-0');
+    modal.classList.add('pointer-events-none');
+    document.body.classList.remove('modal-active');
 });
