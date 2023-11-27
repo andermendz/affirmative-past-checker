@@ -27,8 +27,8 @@ document.getElementById('validateAll').addEventListener('click', function() {
     const sentences = document.querySelectorAll('.sentence');
     let score = 0;
 
-    const singularSubjects = ["I", "He", "She", "It"];
-    const pluralSubjects = ["You", "We", "They"];
+    const singularSubjects = ["i", "he", "she", "it"];
+    const pluralSubjects = ["you", "we", "they"];
     const singularVerb = "was";
     const pluralVerb = "were";
 
@@ -36,14 +36,20 @@ document.getElementById('validateAll').addEventListener('click', function() {
         const input = sentence.querySelector('input');
         const result = sentence.querySelector('.result');
 
-        const words = input.value.split(' ');
-        const subject = words[0];
-        const verb = words[1];
+        const words = input.value.toLowerCase().split(' ');
+        let subject = words[0];
+        let verb = words[1];
+
+        // Check for defined article "the"
+        if (subject === 'the') {
+            subject = words[1];
+            verb = words[2];
+        }
 
         if ((singularSubjects.includes(subject) && verb === singularVerb) || 
             (pluralSubjects.includes(subject) && verb === pluralVerb) ||
-            (subject[0].toLowerCase() !== 's' && verb === singularVerb && !pluralSubjects.includes(subject)) ||
-            (subject[0].toLowerCase() === 's' && verb === pluralVerb && !singularSubjects.includes(subject))) {
+            (!singularSubjects.includes(subject) && !pluralSubjects.includes(subject) && subject[subject.length-1] !== 's' && verb === singularVerb) ||
+            (!singularSubjects.includes(subject) && !pluralSubjects.includes(subject) && subject[subject.length-1] === 's' && verb === pluralVerb)) {
             result.textContent = 'La frase es válida.';
             result.style.color = 'green';
             score++;
@@ -66,6 +72,9 @@ document.getElementById('validateAll').addEventListener('click', function() {
         motivationalMessageElement.textContent = 'No te desanimes, sigue intentándolo.';
     }
 });
+
+
+
 
 
 var openModal = document.querySelector('#openModal');
