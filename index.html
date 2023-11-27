@@ -12,13 +12,16 @@
             <div class="p-9">
                 <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">English Sentence Validator</div>
                 <div id="sentences">
-                    <div class="sentence">
-                        <input type="text" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm">
-                        <p class="result mt-2 text-gray-500 text-sm"></p>
+                    <div class="sentence flex items-center ">
+                        <button class="remove px-1 py-0\.5 bg-red-500 text-white rounded">X</button>
+                        <input type="text" class="mt-2 ml-2 flex-grow rounded-md border-gray-300 shadow-sm">
+                        <p class="result mt-2 ml-2 text-gray-500 text-sm"></p>
                     </div>
                 </div>
                 <button id="add" class="mt-2 px-2 py-1 bg-green-500 text-white rounded">Add Sentence</button>
                 <button id="validateAll" class="mt-2 px-2 py-1 bg-blue-500 text-white rounded">Validate All</button>
+                <p id="score" class="mt-2 text-gray-500 text-sm"></p>
+                <p id="motivationalMessage" class="mt-2 text-gray-500 text-sm"></p>
             </div>
         </div>
     </div>
